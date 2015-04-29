@@ -52,3 +52,37 @@ module 8x8_Mult_Piped (a, b, clk, reset, y);
       yR[0] = 8x8_Mult_Piped(aR[0], bR[0]);
 
     end
+    
+    function [15:0] 8x8_Mult_Piped;
+    input [7:0] a,b;
+    reg [7:0] a_mag, b_mag;
+    reg [14:0] y_mag;
+    reg [14:0] y_neg;
+    begin
+      
+      case (a[7])
+        0: a_mag = a[6:0];
+        1: a_mag = 128 - a[6:0];
+      endcase
+      
+      case(b[7])
+        0: b_mag = b[6:0];
+        1: b_mag = 128 - b[6:0];
+      endcase 
+      
+      y_mag = a_mag * b_mag;
+      
+      if ((a[7]^b[7]) & (y_mag != 0))
+      begin
+        y_neg = 32768 - y_mag[13:0]
+        8x8_Mult_Piped = {1'b1, y_neg};
+      end
+      else 
+        8x8_Mult_Piped = y_mag;
+      end
+      
+      endfunction 
+      
+      assign y = yR[7];
+      
+      endmodule
