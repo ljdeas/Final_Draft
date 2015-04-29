@@ -4,6 +4,8 @@
 //    James Ginley, Kaila Balacio, Lillian Deas     //
 /////////////////////////////////////////////////////
 
+
+// 2 to 1 Mux for First Stage
 module 2to1Mux ( in_0, in_1, out);
   input [3:0] in_0;
   input       in_1;
@@ -12,7 +14,8 @@ module 2to1Mux ( in_0, in_1, out);
   assign out = in_1 ? in_0;
   
 endmodule
-  
+
+// Pipelined Multiplier for Second and Third Stages
 module 8x8_Mult_Piped (a, b, clk, reset, y);
   input clk, reset;
   input[0:7] a, b;
